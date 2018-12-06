@@ -32,7 +32,7 @@ sudo apt-get install cmake
 rustup target add wasm32-unknown-emscripten
 ```
 
-2.Set up Emscripten via emsdk:
+2. Set up Emscripten via emsdk:
 
 ```shell
 curl https://s3.amazonaws.com/mozilla-games/emscripten/releases/emsdk-portable.tar.gz | tar -zxv -C ~/
@@ -47,7 +47,7 @@ Running,
 ```shell
 ./emsdk activate sdk-incoming-64bit
 ```
-and following the instructions to add bin directories to path, 
+and following the instructions to add bin directories to PATH, 
 
 or
 
@@ -63,7 +63,7 @@ _NOTE: If you dont add the bin directories to PATH, have in mind that when you r
 rustup override set nightly
 ```
 
-5. Create project
+5. Create project:
 
 ```shell
 cargo init wasm-rust-demo
@@ -77,6 +77,53 @@ cargo build --target=wasm32-unknown-emscripten --release
 ```
 
 If you run _tree target_ you will see that cargo created several files in _target/wasm32-unknown-emscripten/release/deps/_ for us. Of primary interest are the .wasm and .js files.
+
+```shell
+target
+├── debug
+│   ├── build
+│   ├── deps
+│   │   ├── wasm_demo-9155f45e2d3b2046
+│   │   └── wasm_demo-9155f45e2d3b2046.d
+│   ├── examples
+│   ├── incremental
+│   │   └── wasm_demo-qdjh4pd5y90m
+│   │       ├── s-f7bzymy71w-1eipwp4-13avr2nwlpfqh
+│   │       │   ├── 1h12qtepu6wjmoxz.o
+│   │       │   ├── 1ki0uvre2ly2h8c8.o
+│   │       │   ├── 22nnercelyg5644a.o
+│   │       │   ├── 27z5p86w7wxxci0z.o
+│   │       │   ├── 438cm4xgjo5x8da3.o
+│   │       │   ├── dep-graph.bin
+│   │       │   ├── na7a8opvk9xvjme.o
+│   │       │   ├── query-cache.bin
+│   │       │   └── work-products.bin
+│   │       └── s-f7bzymy71w-1eipwp4.lock
+│   ├── native
+│   ├── wasm-demo
+│   └── wasm-demo.d
+├── release
+│   ├── build
+│   ├── deps
+│   ├── examples
+│   ├── incremental
+│   └── native
+└── wasm32-unknown-emscripten
+    └── release
+        ├── build
+        ├── deps
+        │   ├── wasm_demo.d
+        │   ├── wasm-demo.js
+        │   └── wasm_demo.wasm
+        ├── examples
+        ├── incremental
+        ├── native
+        ├── wasm_demo.d
+        ├── wasm-demo.d
+        ├── wasm-demo.js
+        └── wasm_demo.wasm
+
+```
 
 7. Create a site/index.html:
 
@@ -108,11 +155,26 @@ all:
     find target/wasm32-unknown-emscripten/release/deps -type f ! -name "*.asm.js" -name "*.js" | xargs -I {} cp {} site/site.js
 ```
 
-Run _make_ and run: 
+Run *make* and see the tree: 
 
 ```shell
-tree site
+$ tree site
+site
+├── index.html
+├── site.js
+└── wasm_demo.wasm
 ```
+
+9. Open a server to see the generated code:
+
+```shell
+python -m SimpleHTTPServer
+```
+
+Now go to _http://localhost:8000/site/_ and open the console.
+
+![sample-wasm](img/sample-wasm.png?raw=true)
+
 
 ## License
 
