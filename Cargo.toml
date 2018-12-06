@@ -1,0 +1,7 @@
+[package]
+name = "wasm-demo"
+version = "0.1.0"
+authors = ["pan-karyp"]
+edition = "2018"
+
+[dependencies]
