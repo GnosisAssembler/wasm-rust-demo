@@ -1,6 +1,8 @@
-# Wasm-Rust-demo
+# wasm-rust-demo
 
-> A starter application for WASM and Rust.
+![project template](https://img.shields.io/badge/project-template-blue.svg?style=flat-square)
+
+>  A starter guide for WASM and Rust
 
 ## Prerequisites
 
